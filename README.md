@@ -1,6 +1,6 @@
 Google Latitude Logger
 ======================
-Store your Location Logs to MongoDB
+Store Your Location Logs to MongoDB
 
 
 Setup Latitude Badge API
