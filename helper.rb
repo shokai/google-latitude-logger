@@ -1,4 +1,6 @@
-require 'mongo'
+require 'bson'
+gem 'mongoid', '>=2.0.0'
+require 'mongoid'
 require 'bson'
 require 'yaml'
 require 'json'
@@ -12,13 +14,10 @@ rescue => e
   exit 1
 end
 
-begin
-  @@mongo = Mongo::Connection.new(@@conf['mongo_server'], @@conf['mongo_port'])
-  @@db = @@mongo.db(@@conf['mongo_dbname'])
-rescue => e
-  STDERR.puts 'MongoDB connection error!'
-  STDERR.puts e
-  exit 1
+Mongoid.configure{|conf|
+  conf.master = Mongo::Connection.new(@@conf['mongo_server'], @@conf['mongo_port']).db(@@conf['mongo_dbname'])
+}
+
+class Location
+  include Mongoid::Document
 end
-
-

@@ -3,7 +3,6 @@ require 'rubygems'
 require File.dirname(__FILE__)+'/helper'
 require 'open-uri'
 require 'pp'
-require 'activesupport'
 
 url = "http://www.google.com/latitude/apps/badge/api?user=#{@@conf['user_id']}&type=json"
 
@@ -27,10 +26,21 @@ location = {
   :user_id => props['id']
 }
 props.each{|k,v|
-  location[k.underscore.to_sym] = v
+  location[k.underscore.to_sym] = v unless k == 'id'
 }
 
 time = location[:time_stamp]
+
+if Location.where({:time_stamp => time}).count > 0
+  puts "timeStamp #{time} already stored.."
+else
+  if bson_id = Location.new(location).save
+    puts "timeStamp #{time} save! => #{bson_id}"
+  end
+end
+
+exit
+
 if @@db['locations'].find({:time_stamp => time}).count > 0
   puts "timeStamp #{time} already stored.."
   exit

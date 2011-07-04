@@ -22,7 +22,7 @@ Install Dependencies
 --------------------
 
     % brew install mongodb # for MacOSX
-    % gem install json mongo bson bson_ext
+    % gem install json mongo bson bson_ext mongoid
 
 
 Run Logger
