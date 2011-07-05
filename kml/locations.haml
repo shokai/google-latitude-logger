@@ -12,8 +12,9 @@
       %PolyStyle
         %color 00000000
     %Placemark
-      %name= @locs.first.time_stamp
-      %description= @locs.first.time_stamp
+      - time = Time.at @locs.first.time_stamp
+      %name= time
+      %description= time
       %styleUrl walkpath
       %LineString
         %tessellate 1
