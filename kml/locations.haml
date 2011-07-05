@@ -1,0 +1,20 @@
+- require File.dirname(__FILE__)+'/../helper'
+- @locs = Location.desc(:time_stamp).limit(100)
+!!! XML
+%kml{:xmlns => 'http://earth.google.com/kml/2.1'}
+  %Document
+    %name latitude locations
+    %description walkpath
+    %Style#walkpath
+      %LineStyle
+        %color FF0000FF
+        %width 1
+      %PolyStyle
+        %color 00000000
+    %Placemark
+      %name= @locs.first.time_stamp
+      %description= @locs.first.time_stamp
+      %styleUrl walkpath
+      %LineString
+        %tessellate 1
+        %coordinates= @locs.map{|loc| "#{loc.geo_lon},#{loc.geo_lat}" }.join(' ')

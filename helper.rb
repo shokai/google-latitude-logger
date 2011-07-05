@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'bson'
 gem 'mongoid', '>=2.0.0'
 require 'mongoid'
