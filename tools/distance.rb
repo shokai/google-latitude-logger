@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-require 'rubygems'
 require File.dirname(__FILE__)+'/../helper'
 
 R = 6378137
