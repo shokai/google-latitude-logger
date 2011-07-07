@@ -51,7 +51,7 @@ def direction(a, b)
 end
 
 a, b = Location.desc(:time_stamp).limit(2)
-sp = speed(a, b)
+sp = speed(a, b).to_i
 dir = direction(a, b)
 puts Time.at(a.time_stamp)
 puts cmd = "/usr/local/sbin/tweet_log '時速#{sp}Kmで#{dir}に移動中'"
