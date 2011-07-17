@@ -2,6 +2,18 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require File.dirname(__FILE__)+'/../helper'
+require 'ArgsParser'
+
+parser = ArgsParser.parser
+parser.bind(:min, :m, 'calc recent N minutes', 10)
+parser.bind(:tweet_cmd, :t, 'path to tweet command', '/usr/local/sbin/tweet_log')
+parser.bind(:help, :h, 'show help')
+first, params = parser.parse(ARGV)
+
+if parser.has_option(:help)
+  puts parser.help
+  exit
+end
 
 R = 6378137
 
@@ -50,12 +62,25 @@ def direction(a, b)
   end
 end
 
-a, b = Location.desc(:time_stamp).limit(2)
+locs = Location.where(:time_stamp.gt => Time.now.to_i-60*params[:min]).desc(:time_stamp)
+
+if locs.count < 2
+  puts "no locations found recent #{params[:min]} mins"
+  exit
+end
+
+a = locs.first
+b = locs.last
+
+[a,b].each{|i|
+  puts "#{Time.at(i.time_stamp)} #{i.reverse_geocode} (#{i.geo_lat},#{i.geo_lon})"
+}
+puts "and more #{locs.count-2} locations" if locs.count > 2
+
 sp = speed(a, b).to_i
 dir = direction(a, b)
-puts Time.at(a.time_stamp)
-puts cmd = "/usr/local/sbin/tweet_log '時速#{sp}Kmで#{dir}に移動中'"
-if Time.now.to_i - a.time_stamp > 60*20 or sp < 1
+puts cmd = "#{params[:tweet_cmd]} '時速#{sp}Kmで#{dir}に移動中'"
+if sp < 1
   puts 'not tweet'
   exit
 end
