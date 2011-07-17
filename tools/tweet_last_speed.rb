@@ -62,10 +62,10 @@ def direction(a, b)
   end
 end
 
-locs = Location.where(:time_stamp.gt => Time.now.to_i-60*params[:min]).desc(:time_stamp)
+locs = Location.where(:time_stamp.gt => Time.now.to_i-60*params[:min].to_i).desc(:time_stamp)
 
 if locs.count < 2
-  puts "no locations found recent #{params[:min]} mins"
+  puts "no locations found recent #{params[:min].to_i} mins"
   exit
 end
 
