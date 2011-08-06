@@ -64,9 +64,12 @@ end
 
 locs = Location.where(:time_stamp.gt => Time.now.to_i-60*params[:min].to_i).desc(:time_stamp)
 
-if locs.count < 2
+case locs.count
+when 0
   puts "no locations found recent #{params[:min].to_i} mins"
   exit
+when 1
+  locs = Location.desc(:time_stamp).limit(2)
 end
 
 a = locs.first
