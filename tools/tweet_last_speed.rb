@@ -83,7 +83,7 @@ puts "and more #{locs.count-2} locations" if locs.count > 2
 sp = speed(a, b).to_i
 dir = direction(a, b)
 puts cmd = "#{params[:tweet_cmd]} '時速#{sp}Kmで#{dir}に移動中'"
-if sp < 1
+if sp < 2
   puts 'not tweet'
   exit
 end
