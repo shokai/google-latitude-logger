@@ -82,7 +82,16 @@ puts "and more #{locs.count-2} locations" if locs.count > 2
 
 sp = speed(a, b).to_i
 dir = direction(a, b)
-puts cmd = "#{params[:tweet_cmd]} '時速#{sp}Kmで#{dir}に移動中'"
+trans = '徒歩'
+if sp > 100
+  trans = '飛行機か新幹線とか'
+elsif sp > 30
+  trans = '車か電車'
+elsif sp > 5
+  trans = 'バスか自転車'
+end
+
+puts cmd = "#{params[:tweet_cmd]} '時速#{sp}Kmで#{dir}にたぶん#{trans}で移動中'"
 if sp < 2
   puts 'not tweet'
   exit
