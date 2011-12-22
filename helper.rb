@@ -1,6 +1,6 @@
 require 'rubygems'
+require 'bundler/setup'
 require 'bson'
-gem 'mongoid', '>=2.0.0'
 require 'mongoid'
 require 'bson'
 require 'yaml'
