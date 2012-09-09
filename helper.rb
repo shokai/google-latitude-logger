@@ -1,10 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'bson'
-require 'mongoid'
-require 'bson'
+Bundler.require
 require 'yaml'
-require 'json'
 require 'kconv'
 
 begin
