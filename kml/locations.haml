@@ -1,4 +1,4 @@
-- require File.dirname(__FILE__)+'/../helper'
+- require File.expand_path '../helper', File.dirname(__FILE__)
 - @locs = Location.desc(:time_stamp).limit(100)
 !!! XML
 %kml{:xmlns => 'http://earth.google.com/kml/2.1'}

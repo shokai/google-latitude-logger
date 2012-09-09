@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 require 'rubygems'
-require File.dirname(__FILE__)+'/../helper'
+require File.expand_path '../helper', File.dirname(__FILE__)
 
 R = 6378137
 

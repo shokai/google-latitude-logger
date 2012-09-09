@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.dirname(__FILE__)+'/../helper'
+require File.expand_path '../helper', File.dirname(__FILE__)
 
 loc = Location.desc(:time_stamp).first
 p loc
