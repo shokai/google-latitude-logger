@@ -1,8 +1,9 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'backports'
-gem 'ArgsParser'
 gem 'json'
 gem 'bson'
 gem 'bson_ext'
-gem 'mongoid','<3.0.0'
+gem 'mongoid','~> 2.7'
+gem 'args_parser'
+gem 'tw'

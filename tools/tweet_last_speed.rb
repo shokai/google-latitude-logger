@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require File.expand_path '../helper', File.dirname(__FILE__)
-require 'ArgsParser'
+require 'args_parser'
 
-parser = ArgsParser.parser
-parser.bind(:min, :m, 'calc recent N minutes', 10)
-parser.bind(:tweet_cmd, :t, 'path to tweet command', '/usr/local/sbin/tweet_log')
-parser.bind(:help, :h, 'show help')
-first, params = parser.parse(ARGV)
+parser = ArgsParser.parse ARGV do
+  arg :min, 'calc recent N minutes', :alias => :m, :default => 10
+  arg :tweet_cmd, 'path to tweet command', :alias => :t, :default => 'tw --pipe'
+  arg :help, 'show help', :alias => :h
+end
 
-if parser.has_option(:help)
+if parser.has_option? :help
   puts parser.help
   exit
 end
@@ -62,11 +62,11 @@ def direction(a, b)
   end
 end
 
-locs = Location.where(:time_stamp.gt => Time.now.to_i-60*params[:min].to_i).desc(:time_stamp)
+locs = Location.where(:time_stamp.gt => Time.now.to_i-60*parser[:min].to_i).desc(:time_stamp)
 
 case locs.count
 when 0
-  puts "no locations found recent #{params[:min].to_i} mins"
+  puts "no locations found recent #{parser[:min].to_i} mins"
   exit
 when 1
   locs = Location.desc(:time_stamp).limit(2)
@@ -91,7 +91,7 @@ elsif sp > 5
   trans = 'バスか自転車'
 end
 
-puts cmd = "#{params[:tweet_cmd]} '時速#{sp}Kmで#{dir}にたぶん#{trans}で移動中'"
+puts cmd = "echo '時速#{sp}Kmで#{dir}にたぶん#{trans}で移動中' | #{parser[:tweet_cmd]}"
 if sp < 2
   puts 'not tweet'
   exit
