@@ -88,7 +88,7 @@ if sp > 100
 elsif sp > 30
   trans = '車か電車'
 elsif sp > 5
-  trans = 'バスか自転車'
+  trans = 'バスか自転車か地下鉄'
 end
 
 puts cmd = "echo '時速#{sp}Kmで#{dir}にたぶん#{trans}で移動中' | #{parser[:tweet_cmd]}"
